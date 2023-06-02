@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+
+
+{% block css %}
+    <link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <script script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous">
+    </script>
+    <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+{% endblock css %}
+    
+
+{% block contents %}
+   <div class="container my-4">
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+       <h2 class="text-center">Add a note</h2>
+       <form method="POST">
+           {% csrf_token %}
+           {{ form.as_p }}
+           <button type="submit" class="btn btn-success">Add</button>
+           <button type="reset" class="btn btn-secondary">Clear</button>
+        </form>
+    </div>
+        
+    
+<div class="container my-4">
+        {% if request.user.is_authenticated and notes %}
+    <h3 class="text-center">My Notes</h3>
+    
+    <table class="table" id="notestable">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Note Date</th>
+                <th>Description</th>
+                <th>Actions</th> 
+            </tr>
+        </thead>
+        <tbody>
+            {% for note in notes %}
+            <tr>
+                <td class="text-break"><a class="text-decoration-none color-dark" href="#" data-bs-toggle="modal" data-bs-target="#viewModal" data-note-id="{{ note.id }}">{{ note.title|truncatechars:10 }}</a></td>
+                <td>{{ note.notetime|date:"d-m-Y" }}</td>
+                <td class="text-break">{{ note.description | truncatewords:10 }}</td>
+                <td>
+                    <span>
+                        <button class="btn btn-primary btn-sm editNote" data-bs-toggle="modal" data-bs-target="#editModal" data-note-id="{{ note.id }}">&#9999;</button>
+                        <a href="{% url 'notes:delete_notes' note.id %}" class="btn btn-danger btn-sm">&#x2613;</a>
+                    </span>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Modal for viewing notes -->
+    <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="viewModalLabel">View Note</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-2">
+                    <label for="titleView"><b>Note Title:</b></label>
+                    <p id="viewNoteTitle"></p>
+                    <label for="descriptionView"><b>Description:</b></label>
+                    <p id="viewNoteDescription"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Note</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-2">
+                    <form method="post" id="editForm">
+                        {% csrf_token %}
+                        
+                        <label for="titleEdit">Note Title</label>
+                        <input class="form-control" id="titleEdit" name="title"></input>
+                        
+                        <label for="descEdit">Note Description</label>
+                        <textarea class="form-control" id="descEdit" name="description" rows="6"></textarea>
+                      
+                        <div class="modal-footer d-block">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% else %}
+<h4 class="text-center my-4">No notes found!!</h4>
+
+{% endif %}
+</div>
+
+
+{% endblock contents %}
+
+
+{% block js %}
+<script>
+
+    // DataTable
+    $(document).ready(function() {
+        $("#notestable").DataTable();
+    });
+
+    // Edit Modal
+    let editModal = document.getElementById('editModal');
+    editModal.addEventListener('show.bs.modal', function(event) {
+    let button = event.relatedTarget;
+    let noteId = button.getAttribute('data-note-id');
+    let form = document.getElementById('editForm');
+    form.action = '/editnotes/' + noteId;
+
+    // Fetch the note data using API or other methods
+    fetch('/api/notes/' + noteId + '/')
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) {
+            let titleInput = document.getElementById('titleEdit');
+            let descInput = document.getElementById('descEdit');
+            titleInput.value = data.title;
+            descInput.value = data.description;
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
+    });
+
+    //View Modal
+    let viewModal = document.getElementById('viewModal');
+    viewModal.addEventListener('show.bs.modal', function(event) {
+        let button = event.relatedTarget;
+        let noteId = button.getAttribute('data-note-id');
+        
+        // Fetch the note data using API or other methods
+        fetch('/api/notes/' + noteId + '/')
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) {
+                let titleElement = document.getElementById('viewNoteTitle');
+                let descElement = document.getElementById('viewNoteDescription');
+                titleElement.textContent = data.title;
+                descElement.textContent = data.description;
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+    });
+
+</script>
+
+{% endblock js %}
+    

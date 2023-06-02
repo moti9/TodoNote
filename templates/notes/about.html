@@ -1,0 +1,113 @@
+{% extends 'base.html' %} {% block css %}
+<style>
+  .feature-list {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .feature-list li {
+    margin-bottom: 1rem;
+  }
+</style>
+{% endblock css %} {% block contents %}
+<div class="container my-4">
+  <h2 class="text-center">About TodoNotes</h2>
+  <p>
+    TodoNotes is a simple and efficient web application designed to help you
+    manage your daily tasks and notes. With an intuitive interface and powerful
+    features, TodoNotes makes it easy to stay organized and focused on what
+    matters most.
+  </p>
+
+  <h3>Features</h3>
+  <ul class="feature-list">
+    <li>
+      <strong>Create and manage notes:</strong> Easily add, edit, and delete
+      notes with just a few clicks. Keep track of your thoughts, ideas, and
+      tasks in one convenient location.
+    </li>
+    <li>
+      <strong>Search and filter:</strong> Quickly find the notes you need with
+      our advanced search and filtering options. Sort by date, title, or
+      description to stay organized and efficient.
+    </li>
+    <li>
+      <strong>User-friendly interface:</strong> Our clean and simple design
+      makes it easy to navigate and use the application, even for first-time
+      users.
+    </li>
+    <li>
+      <strong>Responsive design:</strong> TodoNotes is designed to work
+      seamlessly on all devices, including desktops, laptops, tablets, and
+      smartphones. Access your notes anytime, anywhere.
+    </li>
+    <li>
+      <strong>Secure and private:</strong> Your notes are stored securely, and
+      we take your privacy seriously. We never share your data with third
+      parties.
+    </li>
+  </ul>
+
+  <h3>Development Team</h3>
+  <p>
+    TodoNotes is developed by a dedicated team of software engineers who are
+    passionate about creating user-friendly and efficient tools to help people
+    stay organized and productive. Our team is constantly working to improve the
+    application and add new features based on user feedback and industry best
+    practices.
+  </p>
+
+  <h3>Technology Stack</h3>
+  <p>
+    TodoNotes is built using a modern technology stack to ensure a fast,
+    reliable, and secure user experience. Our application is developed using
+    Python and the Django web framework, with a MySQL database for data storage.
+    The front-end is built using HTML, CSS, and JavaScript, with Bootstrap for
+    responsive design.
+  </p>
+
+  <h3>Future Plans</h3>
+  <p>
+    We have big plans for the future of TodoNotes, including the development of
+    a mobile app for iOS and Android devices, integration with popular
+    productivity tools, and the addition of advanced features such as machine
+    learning-based task prioritization and natural language processing for note
+    organization.
+  </p>
+  <ul>
+    <li>
+      <strong>Collaboration:</strong> Share your notes with friends, family, or
+      colleagues to collaborate on tasks and ideas. Control who can view or edit
+      your notes to ensure privacy and security.
+    </li>
+    <li>
+      <strong>Reminders and notifications:</strong> Set reminders for important
+      tasks and receive notifications to ensure you never miss a deadline or
+      forget a task.
+    </li>
+    <li>
+      <strong>Customizable themes:</strong> Personalize your TodoNotes
+      experience with customizable themes and layouts. Choose from a variety of
+      colors and styles to make the application truly your own.
+    </li>
+  </ul>
+
+  <h3>Getting Started</h3>
+  <p>
+    To start using TodoNotes, simply create an account and log in. Once you're
+    logged in, you can add, edit, and delete notes as needed. If you have any
+    questions or need assistance, please don't hesitate to contact our support
+    team.
+  </p>
+
+  <h3>Contact Us</h3>
+  <p>
+    If you have any questions, suggestions, or feedback, we'd love to hear from
+    you. You can reach us at support@todonotes.com or through our
+    <a class="text-decoration-none text-primary" href="{% url 'notes:contact' %}"
+      >contact form</a
+    >
+    on the website.
+  </p>
+</div>
+{% endblock contents %} {% block js %} {% endblock js %}
