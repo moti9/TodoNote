@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+<style>
+    .card img {
+        width: 18rem;
+        height: 18rem;
+    }
+</style>
+{% endblock css %}
+
+{% block contents %}
+<div class="container my-4 py-5 pb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <header class="text-center">
+        <h1 class="display-4">About Todonote</h1>
+        <p class="lead">Your Trusted Task Management Application</p>
+    </header>
+
+    <section class="my-5">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Our Mission</h2>
+                <p>
+                    At Todonote, our mission is to simplify your life by providing a reliable and feature-rich task
+                    management solution. We understand the challenges of modern life, and our goal is to help you stay
+                    organized, focused, and productive.
+                </p>
+                <p>
+                    We believe that managing your tasks should be effortless and intuitive. Todonote is designed with
+                    this philosophy in mind, offering you a seamless experience to keep track of your to-dos and
+                    accomplish your goals.
+                </p>
+            </div>
+            <div class="col-md-6">
+                <h2>Why Choose Us</h2>
+                <p>
+                    Todonote stands out from the crowd because of our commitment to user-friendly design and continuous
+                    improvement. Here's why you should choose us:
+                </p>
+                <ul>
+                    <li>Intuitive Interface: Todonote features an intuitive and user-friendly interface, making it easy
+                        for anyone to get started.</li>
+                    <li>Task Collaboration: Collaborate effortlessly with your team, family, or friends on shared tasks
+                        and projects.</li>
+                    <li>Powerful Features: From task prioritization to deadline reminders, Todonote offers a wide range
+                        of features to meet your needs.</li>
+                    <li>Reliability: We prioritize data security and reliability, ensuring your tasks are always safe
+                        and accessible.</li>
+                    <li>Responsive Support: Our dedicated support team is ready to assist you with any questions or
+                        issues you may encounter.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="my-5">
+        <h2 class="pb-2">Key Features</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card mb-4 shadow rounded">
+                    <div class="card-body">
+                        <h3 class="card-title">Task Management</h3>
+                        <p class="card-text">Effortlessly manage your tasks and to-dos with Todonote's user-friendly
+                            task manager.</p>
+                        <p class="muted fw-bold text-success">Currently available</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4 shadow rounded">
+                    <div class="card-body">
+                        <h3 class="card-title">Collaboration</h3>
+                        <p class="card-text">Collaborate with team members, friends, and family on shared tasks and
+                            projects in real-time.</p>
+                        <p class="muted fw-bold text-secondary">Currently unavailable</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4 shadow rounded">
+                    <div class="card-body">
+                        <h3 class="card-title">Deadlines and Reminders</h3>
+                        <p class="card-text">Set deadlines and receive timely reminders to stay on top of your tasks and
+                            commitments.</p>
+                        <p class="muted fw-bold text-secondary">Currently unavailable</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="my-5">
+        <h2 class="pb-2">Meet the Team</h2>
+        <div class="row my-2">
+            <div class="col-md-4">
+                <div class="card mb-4 shadow rounded">
+                    <img src="{% static 'images/team1.gif' %}" class="card-img-top w-100" alt="John Doe">
+                    <div class="card-body">
+                        <h3 class="card-title">John Doe</h3>
+                        <p class="card-text">Co-Founder & Developer</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4 shadow rounded">
+                    <img src="{% static 'images/team2.png' %}" class="card-img-top w-100" alt="Jane Smith">
+                    <div class="card-body">
+                        <h3 class="card-title">Jane Smith</h3>
+                        <p class="card-text">Designer</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4 shadow rounded">
+                    <img src="{% static 'images/team3.png' %}" class="card-img-top w-100" alt="Mark Johnson">
+                    <div class="card-body">
+                        <h3 class="card-title">Mark Johnson</h3>
+                        <p class="card-text">Marketing Manager</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock contents %}
